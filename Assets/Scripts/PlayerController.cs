@@ -20,7 +20,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     void Start()
     {
-        
+
     }
     
     [SerializeField]
@@ -34,6 +34,7 @@ public class NewBehaviourScript : MonoBehaviour
             List<int> randIdx = getRandIdx();
             Debug.Log(randIdx[0]);
         }
+
     }
     
     private List<int> getRandIdx(){
