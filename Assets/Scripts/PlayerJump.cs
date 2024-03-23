@@ -12,20 +12,16 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float jumpPower;
     Vector2 vecGravity;
     //
-    private float CenterToBottom;
     Rigidbody2D rigid;
 
-    
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
     }
 
     public void Jump(float jumpMult)
     {
-        //rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
         rigid.velocity = new Vector2(rigid.velocity.x, jumpPower * jumpMult);
     }    
 
@@ -47,8 +43,6 @@ public class PlayerJump : MonoBehaviour
     void Update() { 
         isGrounded = Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.52f, 0.1f), CapsuleDirection2D.Horizontal, 0, groundLayer);
         
-        
-
         if (rigid.velocity.y < 0f) {
             //isJumping = false;
             rigid.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
@@ -57,10 +51,6 @@ public class PlayerJump : MonoBehaviour
             }
         }
 
-        //if (rigid.velocity.y > 0) {
-            //rigid.velocity += vecGravity * jumpMultiplier * Time.deltaTime;
-        //}
-        
         if(isGrounded) {
             coyoteTimeCounter = coyoteTime;
         } else  {
@@ -79,9 +69,8 @@ public class PlayerJump : MonoBehaviour
             }
         }
 
-        if(coyoteTimeCounter > 0f && jumpBufferCounter > 0f && isGrounded){ //랜덤하게 바뀌는 키로 어떻게 할당하는지 몰라 일단 할당해놨습니다
+        if(coyoteTimeCounter > 0f && jumpBufferCounter > 0f && isGrounded){ 
             Jump(jumpMultiplier);
-            //isJumping = true;
             jumpBufferCounter = 0f;
         }
     }    
