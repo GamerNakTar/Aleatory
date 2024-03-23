@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
 {
-    public float JumpPower;
-    public float CenterToBottom;
+    [SerializeField] private float JumpPower;
+    private float CenterToBottom;
     Rigidbody2D rigid;
 
     
@@ -14,7 +15,6 @@ public class PlayerJump : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         CenterToBottom = GetRaycastDistance();
-        Debug.Log(CenterToBottom);
     }
 
     public void Jump()
@@ -22,28 +22,46 @@ public class PlayerJump : MonoBehaviour
         rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
     }    
 
-    //이하 이식해야할 부분 (+9번째 줄)
-
-    public LayerMask groundLayer;
+    [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
-
+    [SerializeField] private float coyoteTime = 0.2f;
+    [SerializeField] private float coyoteTimeCounter;
+    [SerializeField] private float jumpBufferTime = 0.2f;
+    [SerializeField] private float jumpBufferCounter;
+    [SerializeField] private float terminalSpeed;
     float GetRaycastDistance()
     {
         Collider2D playerCollider = GetComponent<Collider2D>();
         if (playerCollider != null) {
             float distanceToBottom = playerCollider.bounds.extents.y;
             return distanceToBottom;
+            
         }
         return 1f;
     }
-    
-    void Update() { 
-        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, CenterToBottom, groundLayer);
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded){ //랜덤하게 바뀌는 키로 어떻게 할당하는지 몰라 일단 할당해놨습니다
-            Jump();
-            
-        }
-    }
 
-    
+    void Update() { 
+        
+        if (rigid.velocity.y < -15f) {
+            rigid.velocity = new Vector2(rigid.velocity.x, -15f);
+        }
+        
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, CenterToBottom, groundLayer);
+        if(isGrounded) {
+            coyoteTimeCounter = coyoteTime;
+        } else  {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            jumpBufferCounter = jumpBufferTime;
+        } else {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+        
+        if(coyoteTimeCounter > 0f && jumpBufferCounter > 0f && isGrounded){ //랜덤하게 바뀌는 키로 어떻게 할당하는지 몰라 일단 할당해놨습니다
+            Jump();
+            jumpBufferCounter = 0f;
+        }
+    }    
 }
