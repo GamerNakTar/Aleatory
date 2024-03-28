@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // List of key codes that can be used for left, right, and jump.
     public static List<KeyCode> Keys = new List<KeyCode>() {
     KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y, KeyCode.U, KeyCode.I, KeyCode.O, KeyCode.P, KeyCode.A, KeyCode.S
     , KeyCode.D, KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V, KeyCode.B
@@ -18,32 +18,38 @@ public class NewBehaviourScript : MonoBehaviour
     , KeyCode.End, KeyCode.Delete
     };
 
-    void Start()
+    Rigidbody2D rigid;
+    void Awake()
     {
-
+        rigid = GetComponent<Rigidbody2D>();
     }
-    
-    [SerializeField]
-    private float moveSpeed, currTime;
-
-    // Update is called once per frame
+    [SerializeField] public float maxSpeed;
+    private float currTime;
     void Update()
     {
         currTime += Time.deltaTime;
-        if(currTime > 10){
+        //Get 3 random indices in every 3 seconds.
+        if(currTime > 3){
             List<int> randIdx = getRandIdx();
+
+            //Check whether the indices of key codes are acceptably ramdomized.
             Debug.Log(randIdx[0]);
+            Debug.Log(randIdx[1]);
+            Debug.Log(randIdx[2]);
+            currTime = 0;
         }
+        PlayerLeftRight.LeftRight(true, rigid, maxSpeed);
 
     }
-    
+
     private List<int> getRandIdx(){
         System.Random rand = new System.Random();
         int idx1 = rand.Next(Keys.Count), idx2 = rand.Next(Keys.Count), idx3 = rand.Next(Keys.Count);
-        while(idx1 == idx2 || idx1 == idx3 || idx2 == idx3){
+        //While loop is for avoiding same indices in different movements.
+        /*while(idx1 == idx2 || idx1 == idx3 || idx2 == idx3){
             idx2 = rand.Next(Keys.Count);
             idx3 = rand.Next(Keys.Count);
-        }
+        }*/
         List<int> randIdx = new List<int>() {idx1, idx2, idx3};
         return randIdx;
     }
