@@ -35,11 +35,6 @@ public class PlayerJump : MonoBehaviour
         jumpKeyPressed = true;
     }
 
-    public void JumpDone()
-    {
-        jumpKeyPressed = false;
-    }
-
     void Update() {
         isGrounded = Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.52f, 0.1f), CapsuleDirection2D.Horizontal, 0, groundLayer);
 
@@ -47,6 +42,9 @@ public class PlayerJump : MonoBehaviour
             rigid.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
             if (rigid.velocity.y < -15f) {
                 rigid.velocity = new Vector2(rigid.velocity.x, -15f);
+            }
+            if (!isGrounded) {
+                jumpKeyPressed = false;
             }
         }
 
