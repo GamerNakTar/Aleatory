@@ -63,7 +63,7 @@ public class PlayerJump : MonoBehaviour
             }
         }
 
-        if(coyoteTimeCounter > 0f && jumpBufferCounter > 0f && isGrounded){
+        if(coyoteTimeCounter > 0f && jumpBufferCounter > 0f && isGrounded && !(rigid.velocity.x > 0)){
             rigid.velocity = new Vector2(rigid.velocity.x, jumpPower * jumpMultiplier);
             jumpBufferCounter = 0f;
         }
