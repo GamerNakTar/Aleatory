@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 80496781}
   - component: {fileID: 80496780}
   - component: {fileID: 80496779}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: test_world
   m_TagString: Untagged
   m_Icon: {fileID: 0}
