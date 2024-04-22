@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Timers;
+using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
@@ -31,11 +34,21 @@ public class NewBehaviourScript : MonoBehaviour
     KeyCode Jump, MoveLeft, MoveRight;
     public PlayerJump jumpHandler;
 
+    [SerializeField] private float timer;
+    [SerializeField] private float drunkTimer;
+    [SerializeField] private float drunkLength;
+    private bool isDrunk = false;
+
     // Update is called once per frame
     void Update()
     {
         currTime += Time.deltaTime;
-        if(currTime > 100)
+        if(isDrunk)
+        {
+            StartCoroutine("DrunkTimeController");
+        }
+
+        if(currTime > timer)
         {
             List<int> randIdx = getRandIdx();
             Jump = Keys[randIdx[0]];
@@ -50,7 +63,7 @@ public class NewBehaviourScript : MonoBehaviour
         // Jump
         if (Input.GetKey(Jump)) // Use GetKeyDown for single jump press
         {
-            jumpHandler.Jump(1);
+            jumpHandler.Jump();
         }
         // Movement
         if (Input.GetKey(MoveLeft))
@@ -68,6 +81,14 @@ public class NewBehaviourScript : MonoBehaviour
         int idx1 = rand.Next(Keys.Count), idx2 = rand.Next(Keys.Count), idx3 = rand.Next(Keys.Count);
         List<int> randIdx = new List<int>() {idx1, idx2, idx3};
         return randIdx;
+    }
+
+    IEnumerator DrunkTimeController() {
+        isDrunk = false;
+        float timerTemp = timer;
+        timer = drunkTimer;
+            yield return new WaitForSeconds(drunkLength);
+        timer = timerTemp;
     }
 }
 
