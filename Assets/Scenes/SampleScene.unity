@@ -181,6 +181,8 @@ GameObject:
   - component: {fileID: 11229639}
   - component: {fileID: 11229638}
   - component: {fileID: 11229637}
+  - component: {fileID: 11229643}
+  - component: {fileID: 11229644}
   - component: {fileID: 11229641}
   - component: {fileID: 11229640}
   - component: {fileID: 11229642}

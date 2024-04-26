@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // List of key codes that can be used for left, right, and jump.
     public static List<KeyCode> Keys = new List<KeyCode>() {
     KeyCode.Space, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y, KeyCode.U, KeyCode.I, KeyCode.O, KeyCode.P
     , KeyCode.S, KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V, KeyCode.B
@@ -21,12 +21,18 @@ public class NewBehaviourScript : MonoBehaviour
     , KeyCode.End, KeyCode.Delete
     };
 
-    void Start()
+    Rigidbody2D rigid;
+    
+    void Awake()
     {
+        rigid = GetComponent<Rigidbody2D>();
         Jump = Keys[0];
         MoveLeft = Keys[1];
         MoveRight = Keys[2];
     }
+    
+    [SerializeField]
+    public float maxSpeed;    
 
     [SerializeField]
     private float moveSpeed = 5f;
@@ -48,6 +54,7 @@ public class NewBehaviourScript : MonoBehaviour
             StartCoroutine("DrunkTimeController");
         }
 
+        // Key Randomize
         if(currTime > timer)
         {
             List<int> randIdx = getRandIdx();
@@ -59,6 +66,7 @@ public class NewBehaviourScript : MonoBehaviour
             Debug.Log(Keys[randIdx[2]]);
             currTime = 0;
         }
+        PlayerLeftRight.LeftRight(true, rigid, maxSpeed);
 
         // Jump
         if (Input.GetKey(Jump)) // Use GetKeyDown for single jump press
