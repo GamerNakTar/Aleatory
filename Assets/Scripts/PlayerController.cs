@@ -22,6 +22,10 @@ public class NewBehaviourScript : MonoBehaviour
     };
 
     Rigidbody2D rigid;
+
+    [SerializeField]
+    public float maxSpeed;
+    public float acceleration;
     
     void Awake()
     {
@@ -29,13 +33,11 @@ public class NewBehaviourScript : MonoBehaviour
         Jump = Keys[0];
         MoveLeft = Keys[1];
         MoveRight = Keys[2];
-    }
-    
-    [SerializeField]
-    public float maxSpeed;    
+        // maxSpeed = 1f;
+        // acceleration = 1f;
+    } 
 
     [SerializeField]
-    private float moveSpeed = 5f;
     private float currTime;
     KeyCode Jump, MoveLeft, MoveRight;
     public PlayerJump jumpHandler;
@@ -47,8 +49,8 @@ public class NewBehaviourScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        currTime += Time.deltaTime;
+    {   
+        // currTime += Time.deltaTime;
         if(isDrunk)
         {
             StartCoroutine("DrunkTimeController");
@@ -57,16 +59,11 @@ public class NewBehaviourScript : MonoBehaviour
         // Key Randomize
         if(currTime > timer)
         {
-            List<int> randIdx = getRandIdx();
-            Jump = Keys[randIdx[0]];
-            MoveLeft = Keys[randIdx[1]];
-            MoveRight = Keys[randIdx[2]];
-            Debug.Log(Keys[randIdx[0]]);
-            Debug.Log(Keys[randIdx[1]]);
-            Debug.Log(Keys[randIdx[2]]);
+            Jump = Keys[getRandIdx()];
+            MoveLeft = Keys[getRandIdx()];
+            MoveRight = Keys[getRandIdx()];
             currTime = 0;
         }
-        PlayerLeftRight.LeftRight(true, rigid, maxSpeed);
 
         // Jump
         if (Input.GetKey(Jump)) // Use GetKeyDown for single jump press
@@ -76,19 +73,17 @@ public class NewBehaviourScript : MonoBehaviour
         // Movement
         if (Input.GetKey(MoveLeft))
         {
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            PlayerLeftRight.LeftRight(true, rigid, maxSpeed, acceleration);
         }
-        else if (Input.GetKey(MoveRight))
+        if (Input.GetKey(MoveRight))
         {
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+            PlayerLeftRight.LeftRight(false, rigid, maxSpeed, acceleration);
         }
     }
 
-    private List<int> getRandIdx(){
+    private int getRandIdx(){
         System.Random rand = new System.Random();
-        int idx1 = rand.Next(Keys.Count), idx2 = rand.Next(Keys.Count), idx3 = rand.Next(Keys.Count);
-        List<int> randIdx = new List<int>() {idx1, idx2, idx3};
-        return randIdx;
+        return rand.Next(Keys.Count);
     }
 
     IEnumerator DrunkTimeController() {
