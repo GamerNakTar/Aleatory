@@ -20,7 +20,6 @@ public class PlayerJump : MonoBehaviour
     private bool isGrounded;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
-    private float keyPressLength;
     Vector2 vecGravity;
     Rigidbody2D rigid;
 
@@ -29,7 +28,6 @@ public class PlayerJump : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
         jumpKeyPressed = false;
-        keyPressLength = 1f;
     }
 
     public void Jump()
@@ -58,20 +56,17 @@ public class PlayerJump : MonoBehaviour
 
         if (jumpKeyPressed) {
             jumpBufferCounter = jumpBufferTime;
-            if (!isGrounded) {
-                keyPressLength += Time.deltaTime*2f;
-            }
         } else {
             jumpBufferCounter -= Time.deltaTime;
-            // if (rigid.velocity.y>0) {
-            //     rigid.velocity = new Vector2(rigid.velocity.x, rigid.velocity.y * 0.9f);
-            // }
+            if (rigid.velocity.y>0 && !jumpKeyPressed) {
+                rigid.velocity = new Vector2(rigid.velocity.x, rigid.velocity.y * 0.99f);
+                coyoteTimeCounter = 0f;
+            }
         }
 
         if(coyoteTimeCounter > 0f && jumpBufferCounter > 0f) {
-            rigid.velocity = new Vector2(rigid.velocity.x, jumpPower * jumpMultiplier * keyPressLength);
+            rigid.velocity = new Vector2(rigid.velocity.x, jumpPower * jumpMultiplier);
             jumpBufferCounter = 0f;
-            keyPressLength = 1f;
         }
 
         jumpKeyPressed = false;
