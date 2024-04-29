@@ -14,7 +14,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject player;
     private NewBehaviourScript controllerScript;
     private Vector3 newScale;
-    private float currentTime, timerLength;
 
 
     void Start()
@@ -32,8 +31,7 @@ public class UIController : MonoBehaviour
         camx = Camera.main.gameObject.transform.position.x;
         camy = Camera.main.gameObject.transform.position.y;
         targetPos = new Vector3(camx, camy, 0f);
-        Vector3 UIpos = Vector3.Lerp(transform. position, targetPos, 0.5f);
-        transform.position = UIpos;
+        transform.position = targetPos;
 
         /// Timer UI
         newScale = new Vector3(controllerScript.currTime/controllerScript.timer, 1f, 1f);
