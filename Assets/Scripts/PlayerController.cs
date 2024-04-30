@@ -26,7 +26,7 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField]
     public float maxSpeed;
     public float acceleration;
-    
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -35,21 +35,21 @@ public class NewBehaviourScript : MonoBehaviour
         MoveRight = Keys[2];
         // maxSpeed = 1f;
         // acceleration = 1f;
-    } 
+    }
 
     [SerializeField]
-    private float currTime;
+    public float currTime;
     KeyCode Jump, MoveLeft, MoveRight;
     public PlayerJump jumpHandler;
 
-    [SerializeField] private float timer;
+    [SerializeField] public float timer;
     [SerializeField] private float drunkTimer;
     [SerializeField] private float drunkLength;
     private bool isDrunk = false;
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         // currTime += Time.deltaTime;
         if(isDrunk)
         {

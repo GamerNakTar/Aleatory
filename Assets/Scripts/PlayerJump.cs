@@ -43,9 +43,9 @@ public class PlayerJump : MonoBehaviour
             if (rigid.velocity.y < -15f) {
                 rigid.velocity = new Vector2(rigid.velocity.x, -15f);
             }
-            if (!isGrounded) {
-                jumpKeyPressed = false;
-            }
+            // if (!isGrounded) {
+            //     jumpKeyPressed = false;
+            // }
         }
 
         if(isGrounded) {
@@ -58,8 +58,9 @@ public class PlayerJump : MonoBehaviour
             jumpBufferCounter = jumpBufferTime;
         } else {
             jumpBufferCounter -= Time.deltaTime;
-            if (rigid.velocity.y>0) {
-                rigid.velocity = new Vector2(rigid.velocity.x, rigid.velocity.y * 0.6f);
+            if (rigid.velocity.y>0 && !jumpKeyPressed) {
+                rigid.velocity = new Vector2(rigid.velocity.x, rigid.velocity.y * 0.99f);
+                coyoteTimeCounter = 0f;
             }
         }
 
@@ -67,5 +68,7 @@ public class PlayerJump : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.x, jumpPower * jumpMultiplier);
             jumpBufferCounter = 0f;
         }
+
+        jumpKeyPressed = false;
     }
 }
