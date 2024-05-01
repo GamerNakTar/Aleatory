@@ -44,7 +44,7 @@ public class NewBehaviourScript : MonoBehaviour
     public KeyCode Jump, MoveLeft, MoveRight;
     public PlayerJump jumpHandler;
 
-    [SerializeField] private float timer;
+    [SerializeField] public float timer;
     [SerializeField] private float drunkTimer;
     [SerializeField] private float drunkLength;
     private bool isDrunk = false;
