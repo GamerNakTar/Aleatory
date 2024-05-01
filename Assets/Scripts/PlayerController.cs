@@ -40,7 +40,7 @@ public class NewBehaviourScript : MonoBehaviour
     public DisplayControls displayControls;
 
     [SerializeField]
-    private float currTime;
+    public float currTime;
     public KeyCode Jump, MoveLeft, MoveRight;
     public PlayerJump jumpHandler;
 
