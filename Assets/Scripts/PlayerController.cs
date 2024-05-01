@@ -37,9 +37,11 @@ public class NewBehaviourScript : MonoBehaviour
         // acceleration = 1f;
     }
 
+    public DisplayControls displayControls;
+
     [SerializeField]
-    public float currTime;
-    KeyCode Jump, MoveLeft, MoveRight;
+    private float currTime;
+    public KeyCode Jump, MoveLeft, MoveRight;
     public PlayerJump jumpHandler;
 
     [SerializeField] public float timer;
@@ -47,10 +49,15 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private float drunkLength;
     private bool isDrunk = false;
 
+    void Start()
+    {
+        displayControls.UpdateKeyDisplay();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        // currTime += Time.deltaTime;
+        currTime += Time.deltaTime;
         if(isDrunk)
         {
             StartCoroutine("DrunkTimeController");
@@ -63,6 +70,8 @@ public class NewBehaviourScript : MonoBehaviour
             MoveLeft = Keys[getRandIdx()];
             MoveRight = Keys[getRandIdx()];
             currTime = 0;
+
+            displayControls.UpdateKeyDisplay();
         }
 
         // Jump
