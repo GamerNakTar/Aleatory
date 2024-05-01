@@ -26,7 +26,7 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField]
     public float maxSpeed;
     public float acceleration;
-    
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -35,11 +35,13 @@ public class NewBehaviourScript : MonoBehaviour
         MoveRight = Keys[2];
         // maxSpeed = 1f;
         // acceleration = 1f;
-    } 
+    }
+
+    public DisplayControls displayControls;
 
     [SerializeField]
     private float currTime;
-    KeyCode Jump, MoveLeft, MoveRight;
+    public KeyCode Jump, MoveLeft, MoveRight;
     public PlayerJump jumpHandler;
 
     [SerializeField] private float timer;
@@ -47,10 +49,15 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private float drunkLength;
     private bool isDrunk = false;
 
+    void Start()
+    {
+        displayControls.UpdateKeyDisplay();
+    }
+
     // Update is called once per frame
     void Update()
-    {   
-        // currTime += Time.deltaTime;
+    {
+        currTime += Time.deltaTime;
         if(isDrunk)
         {
             StartCoroutine("DrunkTimeController");
@@ -63,6 +70,8 @@ public class NewBehaviourScript : MonoBehaviour
             MoveLeft = Keys[getRandIdx()];
             MoveRight = Keys[getRandIdx()];
             currTime = 0;
+
+            displayControls.UpdateKeyDisplay();
         }
 
         // Jump
