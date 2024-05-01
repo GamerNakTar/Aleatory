@@ -64,6 +64,11 @@ public class NewBehaviourScript : MonoBehaviour
         displayControls.UpdateKeyDisplay();
     }
 
+    void Start()
+    {
+        displayControls.UpdateKeyDisplay();
+    }
+
     // Update is called once per frame
     void Update()
     {
