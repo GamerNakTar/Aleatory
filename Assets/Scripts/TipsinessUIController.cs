@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DrunkUIController : MonoBehaviour
+public class TipsinessUIController : MonoBehaviour
 {
     [SerializeField] private GameObject timerBar;
     [SerializeField] private GameObject player;
@@ -19,7 +19,7 @@ public class DrunkUIController : MonoBehaviour
 
     void Update()
     {
-        newScale = new Vector3(controllerScript.drunkCurrTime/controllerScript.drunkTimer, 1f, 1f);
+        newScale = new Vector3(controllerScript.alcoholGauge/controllerScript.alcoholCapacity, 1f, 1f);
         timerBar.gameObject.transform.localScale = newScale;
     }
 }
