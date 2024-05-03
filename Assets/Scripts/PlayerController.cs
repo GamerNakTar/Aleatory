@@ -27,64 +27,65 @@ public class NewBehaviourScript : MonoBehaviour
     public float maxSpeed;
     public float acceleration;
 
+    public DisplayControls displayControls;
+
+    [SerializeField]
+    public float currTime;
+    // 취기 게이지 수치
+    public float alcoholGauge;
+    public KeyCode Jump, MoveLeft, MoveRight;
+    public PlayerJump jumpHandler;
+
+    [SerializeField] public float timer;
+    // 피버 게이지 총량
+    [SerializeField] public float alcoholCapacity;
+    // 피버 시 타이머
+    [SerializeField] public float drunkTimer;
+    // 피버 지속 시간
+    [SerializeField] private float drunkLength;
+    public bool isDrunk = false;
+    private bool isDrunking = false;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         Jump = Keys[0];
         MoveLeft = Keys[1];
         MoveRight = Keys[2];
-        // maxSpeed = 1f;
-        // acceleration = 1f;
+        maxSpeed = 7f;
+        acceleration = 0.8f;
+        alcoholCapacity = 60f;
+        alcoholGauge = 0f;
+        currTime = 0f;
     }
-
-    public DisplayControls displayControls;
-
-    [SerializeField]
-    public float currTime;
-    public float drunkCurrTime;
-    public float feverCurrTime;
-    public KeyCode Jump, MoveLeft, MoveRight;
-    public PlayerJump jumpHandler;
-
-    [SerializeField] public float timer;
-    private float prevTimer;
-    [SerializeField] public float drunkTimer;
-    [SerializeField] public float feverTimer;
-    [SerializeField] private float drunkLength;
-    private bool isDrunk = false;
 
     void Start()
     {
         displayControls.UpdateKeyDisplay();
-        prevTimer = timer;
     }
 
     // Update is called once per frame
     void Update()
     {
         currTime += Time.deltaTime;
-        if(isDrunk)
+        if(isDrunk && !isDrunking)
         {
-            StartCoroutine("DrunkTimeController");
+            StartCoroutine("DrunkCoroutine");
         }
 
-        if(drunkCurrTime > drunkTimer)
+        if(isDrunk)
         {
-            feverCurrTime += Time.deltaTime;
-            if(timer > 3)
-            {
-                timer -= Time.deltaTime / 3;      // In Fever(hanover) time, key swap cycle is slightly shorter. (lower bound == 3)
-            }
-            if(feverCurrTime > feverTimer)
-            {
-                drunkCurrTime = 0;
-                feverCurrTime = 0;
-                timer = prevTimer;
-            }
+            alcoholGauge -= Time.deltaTime * (alcoholCapacity / drunkLength);
         }
         else
         {
-            drunkCurrTime += Time.deltaTime;
+            alcoholGauge += Time.deltaTime;
+        }
+
+        // 취기 게이지가 꽉 찼을 때
+        if(alcoholGauge > alcoholCapacity)
+        {
+            isDrunk = true;
         }
 
         // Key Randomize
@@ -106,11 +107,11 @@ public class NewBehaviourScript : MonoBehaviour
         // Movement
         if (Input.GetKey(MoveLeft))
         {
-            PlayerLeftRight.LeftRight(true, rigid, maxSpeed, acceleration);
+            MoveBehaviour.Move(true, rigid, maxSpeed, acceleration);
         }
         if (Input.GetKey(MoveRight))
         {
-            PlayerLeftRight.LeftRight(false, rigid, maxSpeed, acceleration);
+            MoveBehaviour.Move(false, rigid, maxSpeed, acceleration);
         }
     }
 
@@ -119,12 +120,15 @@ public class NewBehaviourScript : MonoBehaviour
         return rand.Next(Keys.Count);
     }
 
-    IEnumerator DrunkTimeController() {
-        isDrunk = false;
+    IEnumerator DrunkCoroutine() {
+        isDrunking = true;
         float timerTemp = timer;
         timer = drunkTimer;
             yield return new WaitForSeconds(drunkLength);
         timer = timerTemp;
+        alcoholGauge = 0;
+        isDrunk = false;
+        isDrunking = false;
     }
 }
 

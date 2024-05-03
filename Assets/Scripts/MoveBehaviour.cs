@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerLeftRight : MonoBehaviour
+public class MoveBehaviour : MonoBehaviour
 {
-
-    public static void LeftRight(bool isLeft, Rigidbody2D rigid, float maxSpeed, float accelaration) {
-        float h;
+    public static void Move(bool isLeft, Rigidbody2D rigid, float maxSpeed, float acceleration) {
+        float dir;
         if (isLeft)
         {
-            h = -1;
+            dir = -1;
         }
         else
         {
-            h = 1;
+            dir = 1;
         }
-        rigid.AddForce(Vector2.right * h * accelaration, ForceMode2D.Force);
+        rigid.AddForce(Vector2.right * dir * acceleration, ForceMode2D.Force);
         if(rigid.velocity.x > maxSpeed) // right max speed
         {
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
