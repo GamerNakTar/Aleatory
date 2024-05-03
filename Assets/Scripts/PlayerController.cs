@@ -45,7 +45,7 @@ public class NewBehaviourScript : MonoBehaviour
     public PlayerJump jumpHandler;
 
     [SerializeField] public float timer;
-    [SerializeField] private float drunkTimer;
+    [SerializeField] public float drunkTimer;
     [SerializeField] private float drunkLength;
     private bool isDrunk = false;
 
