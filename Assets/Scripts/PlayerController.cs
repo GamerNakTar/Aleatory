@@ -41,17 +41,22 @@ public class NewBehaviourScript : MonoBehaviour
 
     [SerializeField]
     public float currTime;
+    public float drunkCurrTime;
+    public float feverCurrTime;
     public KeyCode Jump, MoveLeft, MoveRight;
     public PlayerJump jumpHandler;
 
     [SerializeField] public float timer;
+    private float prevTimer;
     [SerializeField] public float drunkTimer;
+    [SerializeField] public float feverTimer;
     [SerializeField] private float drunkLength;
     private bool isDrunk = false;
 
     void Start()
     {
         displayControls.UpdateKeyDisplay();
+        prevTimer = timer;
     }
 
     // Update is called once per frame
@@ -61,6 +66,25 @@ public class NewBehaviourScript : MonoBehaviour
         if(isDrunk)
         {
             StartCoroutine("DrunkTimeController");
+        }
+
+        if(drunkCurrTime > drunkTimer)
+        {
+            feverCurrTime += Time.deltaTime;
+            if(timer > 3)
+            {
+                timer -= Time.deltaTime / 3;      // In Fever(hanover) time, key swap cycle is slightly shorter. (lower bound == 3)
+            }
+            if(feverCurrTime > feverTimer)
+            {
+                drunkCurrTime = 0;
+                feverCurrTime = 0;
+                timer = prevTimer;
+            }
+        }
+        else
+        {
+            drunkCurrTime += Time.deltaTime;
         }
 
         // Key Randomize
