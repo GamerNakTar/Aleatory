@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraBase : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     // Public variables for customization
     public Transform targetPosition; // Reference to the target position the camera should follow
@@ -32,7 +32,7 @@ public class CameraBase : MonoBehaviour
 
         //If player is in Fever(hangover) time, camera will stumble
         rotateAngle = transform.eulerAngles;
-        if(controllerScript.feverCurrTime > 0)
+        if(controllerScript.isDrunk)
         {
             Debug.Log(rotateAngle);
             if(rotateAngle.z < 30)

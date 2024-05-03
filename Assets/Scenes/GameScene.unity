@@ -371,16 +371,16 @@ MonoBehaviour:
   acceleration: 0.8
   displayControls: {fileID: 1583472176}
   currTime: 0
-  drunkCurrTime: 0
-  feverCurrTime: 0
+  alcoholGauge: 0
   Jump: 0
   MoveLeft: 0
   MoveRight: 0
   jumpHandler: {fileID: 11229644}
   timer: 10
+  alcoholCapacity: 60
   drunkTimer: 5
-  feverTimer: 10
-  drunkLength: 60
+  drunkLength: 20
+  isDrunk: 0
 --- !u!114 &11229644
 MonoBehaviour:
   m_ObjectHideFlags: 0
