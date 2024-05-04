@@ -7,18 +7,22 @@ using UnityEngine.SceneManagement;
 public class PauseMenuController : MonoBehaviour
 {
     public static bool gameIsPaused = false;
+    private NewBehaviourScript playerController;
 
     [SerializeField]
     private GameObject pauseMenuUI;
+    [SerializeField]
+    private GameObject player;
 
     void Start()
     {
         pauseMenuUI.SetActive(false);
+        playerController = player.GetComponent<NewBehaviourScript>();
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(playerController.Escape))
         {
             if(gameIsPaused) {
                 Resume();

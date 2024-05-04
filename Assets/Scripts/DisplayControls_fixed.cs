@@ -11,6 +11,7 @@ public class DisplayControls_fixed : MonoBehaviour
     private KeyCode Jump;
     private KeyCode MoveLeft;
     private KeyCode MoveRight;
+    private KeyCode Escape;
 
     void Start()
     {
@@ -23,7 +24,8 @@ public class DisplayControls_fixed : MonoBehaviour
         Jump = playerController.Jump;
         MoveLeft = playerController.MoveLeft;
         MoveRight = playerController.MoveRight;
+        Escape = playerController.Escape;
 
-        controlText.text = "Jump: " + Jump.ToString() + "\nLeft: " + MoveLeft.ToString() + "\nRight: " + MoveRight.ToString();
+        controlText.text = "Jump: " + Jump.ToString() + "\nLeft: " + MoveLeft.ToString() + "\nRight: " + MoveRight.ToString()+"\nEscape: "+Escape.ToString();
     }
 }
