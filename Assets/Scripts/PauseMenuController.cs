@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
-    public static bool gameIsPaused = false;
+    public static bool isPaused = false;
     private NewBehaviourScript playerController;
 
     [SerializeField]
@@ -22,9 +22,9 @@ public class PauseMenuController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(playerController.Escape))
+        if(Input.GetKeyDown(playerController.Pause))
         {
-            if(gameIsPaused) {
+            if(isPaused) {
                 Resume();
             }
             else
@@ -38,14 +38,14 @@ public class PauseMenuController : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
-        gameIsPaused = false;
+        isPaused = false;
     }
 
     void Pause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
-        gameIsPaused = true;
+        isPaused = true;
     }
 
     public void Restart()
