@@ -54,7 +54,7 @@ public class NewBehaviourScript : MonoBehaviour
         MoveRight = Keys[2];
         maxSpeed = 7f;
         acceleration = 0.8f;
-        alcoholCapacity = 60f;
+        alcoholCapacity = 10f;
         alcoholGauge = 0f;
         currTime = 0f;
     }
