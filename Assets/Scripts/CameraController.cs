@@ -54,17 +54,17 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            if(rotateAngle.z < 1 || rotateAngle.z > 359)
+            if(rotateAngle.z < 0.5 || rotateAngle.z > 359.5)
             {
                 transform.rotation = Quaternion.Euler(0, 0, 0);
             }
             else if(rotateAngle.z < 30)
             {
-                transform.Rotate(new Vector3(0, 0, -1), (20.0f - 20/rotateAngle.z) * Time.deltaTime);
+                transform.Rotate(new Vector3(0, 0, -1), (20.0f - 20/rotateAngle.z) * Time.deltaTime + 0.05f);
             }
             else if(rotateAngle.z > 330)
             {
-                transform.Rotate(new Vector3(0, 0, 1), (20.0f - 20/(360 - rotateAngle.z)) * Time.deltaTime);
+                transform.Rotate(new Vector3(0, 0, 1), (20.0f - 20/(360 - rotateAngle.z)) * Time.deltaTime + 0.05f);
             }
         }
     }
