@@ -8,7 +8,10 @@ public class DisplayControls : MonoBehaviour
     public Transform player;
     public TextMeshProUGUI controlText;
     public NewBehaviourScript playerController;
+<<<<<<< HEAD
+=======
     public Vector3 offset = new Vector3(0, 2, 0);
+>>>>>>> 913c1ca39d32579df28758c7bddde920f817ed67
     public float displayDuration; //duration of displaying the keyboard changed
 
     private KeyCode Jump;
@@ -32,7 +35,15 @@ public class DisplayControls : MonoBehaviour
 
     void Update() // Update is called once per frame
     {
+<<<<<<< HEAD
+        float screenRatioWidth = Screen.width / 1920f; // 1920은 기준 너비
+        float screenRatioHeight = Screen.height / 1080f; // 1080은 기준 높이
+        controlText.rectTransform.sizeDelta = new Vector2(200 * screenRatioWidth, 100 * screenRatioHeight);
+
+        controlText.transform.position = new Vector3(player.position.x, player.position.y + 2, 0);
+=======
         controlText.transform.position = Camera.main.WorldToScreenPoint(player.position + offset);
+>>>>>>> 913c1ca39d32579df28758c7bddde920f817ed67
     }
 
     public void UpdateKeyDisplay()
