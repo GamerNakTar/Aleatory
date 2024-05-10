@@ -33,7 +33,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float currTime;
     // 취기 게이지 수치
     public float alcoholGauge;
-    public KeyCode Jump, MoveLeft, MoveRight;
+    public KeyCode Jump, MoveLeft, MoveRight, Pause;
     public PlayerJump jumpHandler;
 
     [SerializeField] public float timer;
@@ -52,9 +52,10 @@ public class NewBehaviourScript : MonoBehaviour
         Jump = Keys[0];
         MoveLeft = Keys[1];
         MoveRight = Keys[2];
+        Pause = Keys[3];
         maxSpeed = 7f;
         acceleration = 0.8f;
-        alcoholCapacity = 10f;
+        alcoholCapacity = 60f;
         alcoholGauge = 0f;
         currTime = 0f;
     }
@@ -94,6 +95,7 @@ public class NewBehaviourScript : MonoBehaviour
             Jump = Keys[getRandIdx()];
             MoveLeft = Keys[getRandIdx()];
             MoveRight = Keys[getRandIdx()];
+            Pause = Keys[getRandIdx()];
             currTime = 0;
 
             displayControls.UpdateKeyDisplay();
