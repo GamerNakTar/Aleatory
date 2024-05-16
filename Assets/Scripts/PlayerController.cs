@@ -59,24 +59,10 @@ public class NewBehaviourScript : MonoBehaviour
         currTime = 0f;
     }
 
-<<<<<<< HEAD
     void Start()
     {
         displayControls.UpdateKeyDisplay();
     }
-=======
-    public DisplayControls displayControls;
-
-    [SerializeField]
-    private float currTime;
-    public KeyCode Jump, MoveLeft, MoveRight;
-    public PlayerJump jumpHandler;
-
-    [SerializeField] public float timer;
-    [SerializeField] private float drunkTimer;
-    [SerializeField] private float drunkLength;
-    private bool isDrunk = false;
->>>>>>> 913c1ca39d32579df28758c7bddde920f817ed67
 
     void Start()
     {
@@ -87,14 +73,11 @@ public class NewBehaviourScript : MonoBehaviour
     void Update()
     {
         currTime += Time.deltaTime;
-<<<<<<< HEAD
         if(isDrunk && !isDrunking)
         {
             StartCoroutine("DrunkCoroutine");
         }
 
-=======
->>>>>>> 913c1ca39d32579df28758c7bddde920f817ed67
         if(isDrunk)
         {
             alcoholGauge -= Time.deltaTime * (alcoholCapacity / drunkLength);
@@ -136,7 +119,6 @@ public class NewBehaviourScript : MonoBehaviour
             MoveBehaviour.Move(false, rigid, maxSpeed, acceleration);
         }
     }
-
 
     private int getRandIdx(){
         System.Random rand = new System.Random();
