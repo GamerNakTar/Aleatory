@@ -64,11 +64,6 @@ public class NewBehaviourScript : MonoBehaviour
         displayControls.UpdateKeyDisplay();
     }
 
-    void Start()
-    {
-        displayControls.UpdateKeyDisplay();
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -118,6 +113,8 @@ public class NewBehaviourScript : MonoBehaviour
         {
             MoveBehaviour.Move(false, rigid, maxSpeed, acceleration);
         }
+
+        WrapAroundScreen();
     }
 
     private int getRandIdx(){
@@ -134,6 +131,23 @@ public class NewBehaviourScript : MonoBehaviour
         alcoholGauge = 0;
         isDrunk = false;
         isDrunking = false;
+    }
+
+    private void WrapAroundScreen()
+    {
+        Vector3 position = transform.position;
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(position);
+
+        if (viewportPosition.x < 0)
+        {
+            viewportPosition.x = 1;
+        }
+        else if (viewportPosition.x > 1)
+        {
+            viewportPosition.x = 0;
+        }
+
+        transform.position = Camera.main.ViewportToWorldPoint(viewportPosition);
     }
 }
 

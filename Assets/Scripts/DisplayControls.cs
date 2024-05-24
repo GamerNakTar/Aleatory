@@ -8,7 +8,6 @@ public class DisplayControls : MonoBehaviour
     public Transform player;
     public TextMeshProUGUI controlText;
     public NewBehaviourScript playerController;
-    public Vector3 offset = new Vector3(0, 2, 0);
     public float displayDuration; //duration of displaying the keyboard changed
 
     private KeyCode Jump;
@@ -16,9 +15,19 @@ public class DisplayControls : MonoBehaviour
     private KeyCode MoveRight;
 
 
-    void Update() // Update is called once per frame
+    void Update()
     {
-        controlText.transform.position = Camera.main.WorldToScreenPoint(player.position + offset);
+        // 화면 크기에 맞춰 텍스트 오브젝트의 크기 조절
+        float screenRatioWidth = Screen.width / 1920f; // 1920은 기준 너비
+        float screenRatioHeight = Screen.height / 1080f; // 1080은 기준 높이
+        controlText.rectTransform.sizeDelta = new Vector2(200 * screenRatioWidth, 100 * screenRatioHeight);
+
+        // 폰트 크기 조절
+        controlText.fontSize = Mathf.RoundToInt(7 * screenRatioHeight); // 기준 폰트 크기는 24로 가정
+
+
+        // 스크린 좌표를 이용해 텍스트 위치 조정
+        controlText.transform.position = new Vector3(player.position.x, player.position.y + 3 * screenRatioHeight, 0);
     }
 
     public void UpdateKeyDisplay()
